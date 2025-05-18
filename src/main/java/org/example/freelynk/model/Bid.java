@@ -1,8 +1,14 @@
 package org.example.freelynk.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "bids")
 public class Bid {
     @Id
@@ -17,9 +23,9 @@ public class Bid {
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
-    private Double bidAmount; // e.g., 50.0 (USD)
-    private Integer deliveryDays; // e.g., 7 days
-    private BidStatus status; // PENDING, ACCEPTED, REJECTED
+    private Double bidAmount; 
+    private Integer deliveryDays;
+    private BidStatus status; 
 }
 
 

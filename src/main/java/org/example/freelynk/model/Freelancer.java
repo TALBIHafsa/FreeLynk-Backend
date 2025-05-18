@@ -9,7 +9,7 @@ import java.util.List;
 @PrimaryKeyJoinColumn(name = "user_id")
 public class Freelancer extends User {
     @ElementCollection
-    private List<String> skills; // e.g., ["Web Design", "JavaScript"]
+    private List<String> skills; 
 
     @OneToMany(mappedBy = "freelancer", cascade = CascadeType.ALL)
     private List<Review> reviews;
@@ -17,7 +17,6 @@ public class Freelancer extends User {
     @OneToMany(mappedBy = "freelancer", cascade = CascadeType.ALL)
     private List<Bid> bids;
 
-    // Additional fields (education, certifications)
     @ElementCollection
-    private List<String> certifications; // e.g., ["Full-Stack Web Development Certificate"]
+    private List<String> certifications; 
 }
