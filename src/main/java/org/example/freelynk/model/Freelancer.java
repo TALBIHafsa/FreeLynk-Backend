@@ -1,15 +1,46 @@
 package org.example.freelynk.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "freelancers")
 @PrimaryKeyJoinColumn(name = "user_id")
 public class Freelancer extends User {
+    @Column(name = "profile_image")
+    private String profileImage;
+
+    @Column
+    private String description;
+
+    @Column(name = "years_of_exp")
+    private Integer yearsOfExp;
+
+    @Column
+    private String location;
+
+    @Column
+    private String languages;
+
+    @Column
+    private String occupation;
+
     @ElementCollection
-    private List<String> skills; // e.g., ["Web Design", "JavaScript"]
+    @Column(name = "skills")
+    private List<String> skills;
+
+    @Column
+    private String phone;
+
+    @Column
+    private Double rating;
 
     @OneToMany(mappedBy = "freelancer", cascade = CascadeType.ALL)
     private List<Review> reviews;
@@ -17,7 +48,6 @@ public class Freelancer extends User {
     @OneToMany(mappedBy = "freelancer", cascade = CascadeType.ALL)
     private List<Bid> bids;
 
-    // Additional fields (education, certifications)
-    @ElementCollection
-    private List<String> certifications; // e.g., ["Full-Stack Web Development Certificate"]
+
+
 }
