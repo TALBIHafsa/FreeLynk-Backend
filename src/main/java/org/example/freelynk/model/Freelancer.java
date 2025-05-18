@@ -33,9 +33,6 @@ public class Freelancer extends User {
     private String occupation;
 
     @ElementCollection
-<<<<<<< HEAD
-    private List<String> skills; 
-=======
     @Column(name = "skills")
     private List<String> skills;
 
@@ -44,7 +41,6 @@ public class Freelancer extends User {
 
     @Column
     private Double rating;
->>>>>>> 1d8156104992512746a7fba2bfbc6a6f0d89bd3e
 
     @OneToMany(mappedBy = "freelancer", cascade = CascadeType.ALL)
     private List<Review> reviews;
@@ -52,12 +48,6 @@ public class Freelancer extends User {
     @OneToMany(mappedBy = "freelancer", cascade = CascadeType.ALL)
     private List<Bid> bids;
 
-<<<<<<< HEAD
-    @ElementCollection
-    private List<String> certifications; 
-}
-=======
 
 
 }
->>>>>>> 1d8156104992512746a7fba2bfbc6a6f0d89bd3e
