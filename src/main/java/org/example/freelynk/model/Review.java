@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -13,10 +14,11 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "ratings")
 public class Review {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "rating_id")
-    private Long id;
+    @GeneratedValue
+    @Column(name = "rating_id", updatable = false, nullable = false)
+    private UUID id;
 
     @ManyToOne
     @JoinColumn(name = "client_id", nullable = false)
@@ -34,4 +36,14 @@ public class Review {
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        if (createdAt == null) {
+            createdAt = LocalDateTime.now();
+        }
+        if (id == null) {
+            id = UUID.randomUUID();
+        }
+    }
 }

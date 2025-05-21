@@ -23,6 +23,7 @@ private Set<Project> projects = new HashSet<>();
 
 public Client() {
     super();
+    this.setRole(Role.CLIENT);
 }
 
 public Set<Freelancer> getSavedFreelancers() {

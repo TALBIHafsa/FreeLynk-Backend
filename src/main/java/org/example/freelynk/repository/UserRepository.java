@@ -1,16 +1,14 @@
 package org.example.freelynk.repository;
 
-import org.example.freelynk.model.Role;
 import org.example.freelynk.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
-public interface UserRepository extends JpaRepository<User, Long> {
-    // Find user by email (used for login)
+@Repository
+public interface UserRepository extends JpaRepository<User, UUID> {
     Optional<User> findByEmail(String email);
-
-    // Find all freelancers (role-based filtering)
-    List<User> findByRole(Role role);
+    boolean existsByEmail(String email);
 }

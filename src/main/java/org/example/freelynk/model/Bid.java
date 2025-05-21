@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
+
+import java.util.UUID;
 
 @Entity
 @Data
@@ -11,9 +14,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Table(name = "bids")
 public class Bid {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "bid_id", updatable = false, nullable = false)
+    private UUID id;
 
     @ManyToOne
     @JoinColumn(name = "freelancer_id", nullable = false)
@@ -23,9 +29,13 @@ public class Bid {
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
-    private Double bidAmount; 
+    @Column(name = "bid_amount", nullable = false)
+    private Double bidAmount;
+
+    @Column(name = "delivery_days", nullable = false)
     private Integer deliveryDays;
-    private BidStatus status; 
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private BidStatus status;
 }
-
-

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -14,10 +15,11 @@ import java.time.LocalDateTime;
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private Long id;
+    @GeneratedValue
+    @Column(name = "user_id", updatable = false, nullable = false)
+    private UUID id;
 
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -32,8 +34,19 @@ public class User {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    private Role role; // CLIENT or FREELANCER
+    @Column(nullable = false)
+    private Role role;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        if (createdAt == null) {
+            createdAt = LocalDateTime.now();
+        }
+        if (id == null) {
+            id = UUID.randomUUID();
+        }
+    }
 }

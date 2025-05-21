@@ -4,11 +4,10 @@ import org.example.freelynk.model.Bid;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.UUID;
 
-public interface BidRepository extends JpaRepository<Bid, Long> {
-    // Find all bids for a project (for client view)
-    List<Bid> findByProjectId(Long projectId);
+public interface BidRepository extends JpaRepository<Bid, UUID> {
+    List<Bid> findByProjectId(UUID projectId);
 
-    // Find all bids by a freelancer (for freelancer dashboard)
-    List<Bid> findByFreelancerId(Long freelancerId);
+    List<Bid> findByFreelancerId(UUID freelancerId);
 }
