@@ -1,6 +1,8 @@
 package org.example.freelynk.repository;
 
+import org.example.freelynk.model.Client;
 import org.example.freelynk.model.Project;
+import org.example.freelynk.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,4 +18,7 @@ List<Project> findByBudgetRange(@Param("min") Double min, @Param("max") Double m
     // Filter by required skills (e.g., "Graphic Design")
     @Query("SELECT p FROM Project p JOIN p.requiredSkills s WHERE s IN :skills")
     List<Project> findByRequiredSkills(@Param("skills") List<String> skills);
+
+    // List<Project> findByClient(User client);
+
 }

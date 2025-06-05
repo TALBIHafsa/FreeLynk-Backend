@@ -3,6 +3,8 @@ package org.example.freelynk.security;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -11,10 +13,14 @@ import java.util.Date;
 @Component
 public class JwtUtils {
 
-    private String jwtSecret = "YourSecretKeyHereReplaceWithEnvVar";
-    private long jwtExpirationMs = 900000; // 15 minutes
-    private long refreshTokenExpirationMs = 604800000; // 7 days
+    @Value("${application.security.jwt.secret-key}")
+    private String jwtSecret;
 
+    @Value("${application.security.jwt.expiration}")
+    private long jwtExpirationMs;
+
+    @Value("${application.security.jwt.refresh-token.expiration}")
+    private long refreshTokenExpirationMs;
     private Key key;
 
     @PostConstruct

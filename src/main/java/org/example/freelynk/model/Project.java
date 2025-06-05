@@ -16,13 +16,13 @@ import java.util.UUID;
 @Table(name = "projects")
 public class Project {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "project_id")
+    @GeneratedValue
+    @Column(name = "project_id", columnDefinition = "uuid", updatable = false, nullable = false)
     private UUID id;
 
     @ManyToOne
     @JoinColumn(name = "client_id", nullable = false)
-    private User client; // Only clients can create projects
+    private Client client;
 
     @Column(name = "name")
     private String name;
