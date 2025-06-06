@@ -1,16 +1,12 @@
 package org.example.freelynk.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "freelancers")
 @PrimaryKeyJoinColumn(name = "user_id")
 public class Freelancer extends User {

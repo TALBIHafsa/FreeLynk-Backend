@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface ProjectRepository extends JpaRepository<Project, UUID> {
@@ -20,5 +21,6 @@ List<Project> findByBudgetRange(@Param("min") Double min, @Param("max") Double m
     List<Project> findByRequiredSkills(@Param("skills") List<String> skills);
 
     List<Project> findByClient(Client client);
+    List<Project> findAll();
 
 }

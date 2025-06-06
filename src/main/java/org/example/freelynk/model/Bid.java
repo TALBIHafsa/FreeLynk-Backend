@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.UUID;
 
 @Entity
@@ -23,14 +25,19 @@ public class Bid {
 
     @ManyToOne
     @JoinColumn(name = "freelancer_id", nullable = false)
+    @JsonIgnore
     private Freelancer freelancer;
 
     @ManyToOne
     @JoinColumn(name = "project_id", nullable = false)
+    @JsonIgnore
     private Project project;
 
     @Column(name = "bid_amount", nullable = false)
     private Double bidAmount;
+
+    @Column(name = "motivation", length = 1000)
+    private String motivation;
 
     @Column(name = "delivery_days", nullable = false)
     private Integer deliveryDays;
@@ -38,4 +45,5 @@ public class Bid {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private BidStatus status;
+
 }

@@ -55,5 +55,11 @@ public class ProjectService {
     return projectRepository.findByClient(client);
 }
 
+public List<Project> getAllProjects(){
+    return projectRepository.findAll();
+}
+
+
+
 
 }
