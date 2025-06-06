@@ -27,12 +27,12 @@ public class ProjectController {
         Project project = projectService.addProject(request);
         return ResponseEntity.ok(project);
     }
-//     @GetMapping("/myProjects")
-//     public ResponseEntity<?> getMyProjects() {
-//     User currentClient = SecurityUtil.getCurrentUser();
-//     List<Project> projects = projectService.getProjectsByClient(currentClient);
-//     return ResponseEntity.ok(projects);
-// }
+    @GetMapping("/myProjects")
+    public ResponseEntity<?> getMyProjects() {
+    User currentClient = SecurityUtil.getCurrentUser();
+    List<Project> projects = projectService.getProjectsByClient((Client) currentClient);
+    return ResponseEntity.ok(projects);
+}
 
 
 }

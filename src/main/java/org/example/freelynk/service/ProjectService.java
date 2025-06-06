@@ -51,9 +51,9 @@ public class ProjectService {
         return projectRepository.findById(projectId)
                 .orElseThrow(() -> new IllegalArgumentException("Project not found"));
     }
-//     public List<Project> getProjectsByClient(User client) {
-//     return projectRepository.findByClient(client);
-// }
+    public List<Project> getProjectsByClient(Client client) {
+    return projectRepository.findByClient(client);
+}
 
 
 }
