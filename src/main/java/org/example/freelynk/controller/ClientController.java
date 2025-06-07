@@ -30,4 +30,14 @@ public class ClientController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    @GetMapping("/email/{clientEmail}")
+    public ResponseEntity<Client> getClientByEmail(@PathVariable String clientEmail) {
+        Client client = clientService.getClientByEmail(clientEmail);
+        if (client != null) {
+            return new ResponseEntity<>(client, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 }

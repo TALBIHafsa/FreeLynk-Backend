@@ -29,8 +29,11 @@ public class SecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/client/**").hasAuthority("CLIENT")
-                .requestMatchers("/api/freelancer/**").hasAuthority("FREELANCER")
+//                .requestMatchers("/api/clients/**").hasAuthority("CLIENT")
+                            .requestMatchers("/api/clients/**").permitAll()
+//                .requestMatchers("/api/freelancer/**").hasAuthority("FREELANCER")
+                .requestMatchers("/api/freelancers/**").permitAll()
+
                 .anyRequest().authenticated()
             )
             .userDetailsService(userDetailsService)
