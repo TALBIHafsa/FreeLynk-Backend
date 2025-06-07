@@ -5,9 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Data
 @NoArgsConstructor
@@ -31,7 +34,7 @@ public class Project {
     private String description;
 
     @Column(name = "required_skills")
-    private String requiredSkills;
+    private List<String> requiredSkills;
 
     @Column(name = "min_budget")
     private Double minBudget;
@@ -40,6 +43,8 @@ public class Project {
     private Double maxBudget;
 
     @Column(name = "binding_deadline")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+
     private LocalDateTime bindingDeadline;
 
     @Column(name = "created_at")
