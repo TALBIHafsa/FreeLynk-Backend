@@ -22,7 +22,7 @@ public class Review {
 
     @ManyToOne
     @JoinColumn(name = "client_id", nullable = false)
-    private User client;
+    private Client client;
 
     @ManyToOne
     @JoinColumn(name = "freelancer_id", nullable = false)

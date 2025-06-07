@@ -11,9 +11,7 @@ import java.util.UUID;
 
 @Repository
 public interface FreelancerRepository extends JpaRepository<Freelancer, UUID> {
-    @Query("SELECT f FROM Freelancer f JOIN f.skills s WHERE s IN :skills")
-    List<Freelancer> findBySkills(@Param("skills") List<String> skills);
 
-    @Query("SELECT f FROM Freelancer f JOIN f.reviews r GROUP BY f HAVING AVG(r.level) >= :minRating")
-    List<Freelancer> findTopRated(@Param("minRating") double minRating);
+    @Query("SELECT DISTINCT f FROM Freelancer f JOIN f.skills s WHERE LOWER(s) IN :skills")
+    List<Freelancer> findFreelancersBySkills(@Param("skills") List<String> skills);
 }
