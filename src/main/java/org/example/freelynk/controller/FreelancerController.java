@@ -39,6 +39,18 @@ public class FreelancerController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("/email/{freelancerEmail}")
+    public ResponseEntity<Freelancer> getFreelancerByEmail(@PathVariable String freelancerEmail) {
+        Freelancer freelancer = freelancerService.getFreelancerByEmail(freelancerEmail);
+        if (freelancer != null) {
+            return new ResponseEntity<>(freelancer, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
     @GetMapping("/category/{category}")
     public ResponseEntity<List<Freelancer>> getFreelancersByCategory(@PathVariable String category) {
         List<Freelancer> freelancers = freelancerService.getFreelancersBySkills(Collections.singletonList(category));

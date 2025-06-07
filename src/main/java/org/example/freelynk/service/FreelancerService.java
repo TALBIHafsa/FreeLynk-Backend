@@ -29,6 +29,10 @@ public class FreelancerService {
         return freelancerRepository.findById(freelancerId).orElse(null);
     }
 
+    public Freelancer getFreelancerByEmail(String email) {
+        return freelancerRepository.findByEmail(email).orElse(null);
+    }
+
     public List<Freelancer> getFreelancersBySkills(List<String> skills) {
         List<String> lowerCaseSkills = skills.stream().map(String::toLowerCase).collect(Collectors.toList());
         return freelancerRepository.findFreelancersBySkills(lowerCaseSkills);

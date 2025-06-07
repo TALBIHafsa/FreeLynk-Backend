@@ -22,4 +22,8 @@ public class ClientService {
     public Client getClientById(UUID clientId) {
         return clientRepository.findById(clientId).orElse(null);
     }
+    public Client getClientByEmail(String email) {
+        return clientRepository.findByEmail(email).orElse(null);
+    }
+
 }
