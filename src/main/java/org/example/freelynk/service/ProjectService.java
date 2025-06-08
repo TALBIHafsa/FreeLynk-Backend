@@ -49,7 +49,7 @@ public class ProjectService {
 
     public Project getProjectById(UUID projectId) {
         return projectRepository.findById(projectId)
-                .orElseThrow(() -> new IllegalArgumentException("Project not found"));
+                .orElse(null);
     }
     public List<Project> getProjectsByClient(Client client) {
     return projectRepository.findByClient(client);
@@ -57,6 +57,7 @@ public class ProjectService {
 
 public List<Project> getAllProjects(){
     return projectRepository.findAll();
+
 }
 
 

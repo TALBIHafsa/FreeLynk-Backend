@@ -33,8 +33,11 @@ public class SecurityConfig {
                             .requestMatchers("/api/clients/**").permitAll()
 //                .requestMatchers("/api/freelancer/**").hasAuthority("FREELANCER")
                 .requestMatchers("/api/freelancers/**").permitAll()
+                            .requestMatchers("/api/projects/**").permitAll()
+                            .requestMatchers("/api/bids/**").permitAll()
 
-                .anyRequest().authenticated()
+
+//                .anyRequest().authenticated()
             )
             .userDetailsService(userDetailsService)
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

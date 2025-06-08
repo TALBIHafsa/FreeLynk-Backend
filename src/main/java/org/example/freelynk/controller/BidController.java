@@ -1,6 +1,7 @@
 package org.example.freelynk.controller;
 
 import org.example.freelynk.dto.AddBidRequest;
+import org.example.freelynk.dto.BidResponseDTO;
 import org.example.freelynk.model.Bid;
 import org.example.freelynk.model.Freelancer;
 import org.example.freelynk.security.SecurityUtil;
@@ -13,6 +14,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/bids")
+
 public class BidController {
 
     private final BidService bidService;
@@ -21,15 +23,40 @@ public class BidController {
         this.bidService = bidService;
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<?> addBid(@RequestBody AddBidRequest request) {
-        Freelancer freelancer = (Freelancer) SecurityUtil.getCurrentUser();
-        Bid bid = bidService.addBid(request, freelancer);
-        return ResponseEntity.ok(bid);
+        try {
+            // Validate that freelancer email is provided
+            if (request.getFreelancerEmail() == null || request.getFreelancerEmail().trim().isEmpty()) {
+                return ResponseEntity.badRequest()
+                        .body(new ErrorResponse("Freelancer email is required"));
+            }
+
+            BidResponseDTO bid = bidService.addBid(request);
+            return ResponseEntity.ok(bid);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                    .body(new ErrorResponse("Failed to submit bid: " + e.getMessage()));
+        }
     }
 
-    @GetMapping("/project/{projectId}/bids")
+    // Error response class
+    public static class ErrorResponse {
+        public String message;
+
+        public ErrorResponse(String message) {
+            this.message = message;
+        }
+
+        // Getter for JSON serialization
+        public String getMessage() {
+            return message;
+        }
+    }
+    @GetMapping("/projects/{projectId}")
     public ResponseEntity<List<Bid>> getBidsForProject(@PathVariable UUID projectId) {
         return ResponseEntity.ok(bidService.getBidsForProject(projectId));
     }
+
+
 }

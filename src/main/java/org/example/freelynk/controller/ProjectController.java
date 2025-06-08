@@ -44,7 +44,7 @@ public class ProjectController {
         return ResponseEntity.ok(projects);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<?> getProjectByID(@RequestParam UUID  id ) {
+    public ResponseEntity<?> getProjectByID(@PathVariable  UUID  id ) {
         Project project = projectService.getProjectById(id);
         return ResponseEntity.ok(project);
     }

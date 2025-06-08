@@ -57,7 +57,23 @@ public class FreelancerController {
         return new ResponseEntity<>(freelancers, HttpStatus.OK);
     }
 
+    public static class FreelancerPublicDTO {
+        public String id;
+        public String firstName;
+        public String lastName;
+        public String email;
+        public Double rating;
+        public String occupation;
 
+        public FreelancerPublicDTO(Freelancer freelancer) {
+            this.id = freelancer.getId().toString();
+            this.firstName = freelancer.getFirstName();
+            this.lastName = freelancer.getLastName();
+            this.email = freelancer.getEmail();
+            this.rating = freelancer.getRating();
+            this.occupation = freelancer.getOccupation();
+        }
+    }
 
 
 

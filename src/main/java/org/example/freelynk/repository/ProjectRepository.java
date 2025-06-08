@@ -22,5 +22,6 @@ List<Project> findByBudgetRange(@Param("min") Double min, @Param("max") Double m
 
     List<Project> findByClient(Client client);
     List<Project> findAll();
+    Optional<Project> findById(UUID id);
 
 }

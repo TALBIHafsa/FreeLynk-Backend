@@ -7,8 +7,9 @@ import java.util.UUID;
 @Data
 public class AddBidRequest {
     private UUID projectId;
-    private Double bidAmount;
-    private Integer deliveryDays;
+    private String offer;
+    private String deliveryTime;
     private String motivation;
+    private String freelancerEmail;
 
 }
