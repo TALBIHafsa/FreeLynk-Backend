@@ -15,6 +15,8 @@ public interface FreelancerRepository extends JpaRepository<Freelancer, UUID> {
 
     @Query("SELECT DISTINCT f FROM Freelancer f JOIN f.skills s WHERE LOWER(s) IN :skills")
     List<Freelancer> findFreelancersBySkills(@Param("skills") List<String> skills);
+    @Query("SELECT f FROM Freelancer f JOIN f.skills s WHERE LOWER(s) LIKE LOWER(CONCAT('%', :skill, '%'))")
+    List<Freelancer> findFreelancersBySkillContaining(@Param("skill") String skill);
 
     Optional<Freelancer> findByEmail(String email);
 }
