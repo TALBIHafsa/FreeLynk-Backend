@@ -33,15 +33,12 @@ public class SecurityConfig {
                             .requestMatchers("/api/clients/**").permitAll()
 //                .requestMatchers("/api/freelancer/**").hasAuthority("FREELANCER")
                 .requestMatchers("/api/freelancers/**").permitAll()
-                .requestMatchers("/api/projects/**").permitAll()
-                .requestMatchers("/api/gigs/**").permitAll()
-                .requestMatchers("/api/bids/**").permitAll()
-                .requestMatchers("/api/bids/*/accept").permitAll()
+                            .requestMatchers("/api/projects/**").permitAll()
+                            .requestMatchers("/api/bids/**").permitAll()
+                            .requestMatchers("/api/gigs/**").permitAll()
 
 
-
-
-                .anyRequest().authenticated()
+//                .anyRequest().authenticated()
             )
             .userDetailsService(userDetailsService)
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

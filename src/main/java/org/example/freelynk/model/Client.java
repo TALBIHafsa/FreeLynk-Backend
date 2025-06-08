@@ -42,5 +42,4 @@ private Set<Freelancer> savedFreelancers = new HashSet<>();
     public void setProjects(Set<Project> projects) {
         this.projects = projects;
     }
-    
 }

@@ -34,7 +34,7 @@ public class ProjectController {
     @GetMapping("/myProjects")
     public ResponseEntity<?> getMyProjects() {
     User currentClient = SecurityUtil.getCurrentUser();
-    List<Project> projects = projectService.getProjectsByClientId(currentClient.getId());
+    List<Project> projects = projectService.getProjectsByClient((Client) currentClient);
     return ResponseEntity.ok(projects);
 }
 
@@ -44,7 +44,7 @@ public class ProjectController {
         return ResponseEntity.ok(projects);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<?> getProjectByID(@PathVariable UUID  id ) {
+    public ResponseEntity<?> getProjectByID(@PathVariable  UUID  id ) {
         Project project = projectService.getProjectById(id);
         return ResponseEntity.ok(project);
     }

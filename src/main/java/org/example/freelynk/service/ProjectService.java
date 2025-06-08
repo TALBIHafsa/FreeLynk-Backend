@@ -38,7 +38,7 @@ public class ProjectService {
         project.setClient(client);
         project.setName(request.getName());
         project.setDescription(request.getDescription());
-        project.setRequiredSkillsList(request.getRequiredSkills());
+        project.setRequiredSkills(request.getRequiredSkills());
         project.setMinBudget(request.getMinBudget());
         project.setMaxBudget(request.getMaxBudget());
         project.setBindingDeadline(request.getBindingDeadline());
@@ -49,14 +49,15 @@ public class ProjectService {
 
     public Project getProjectById(UUID projectId) {
         return projectRepository.findById(projectId)
-                .orElseThrow(() -> new IllegalArgumentException("Project not found"));
+                .orElse(null);
     }
-    public List<Project> getProjectsByClientId(UUID id) {
-    return projectRepository.findByClientId(id);
+    public List<Project> getProjectsByClient(Client client) {
+    return projectRepository.findByClient(client);
 }
 
 public List<Project> getAllProjects(){
     return projectRepository.findAll();
+
 }
 
 
