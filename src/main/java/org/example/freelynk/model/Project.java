@@ -47,7 +47,6 @@ public class Project {
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
-    @JsonIgnore
 
     private List<Bid> bids;
 }

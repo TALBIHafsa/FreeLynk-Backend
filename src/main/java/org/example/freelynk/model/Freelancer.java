@@ -43,7 +43,13 @@ public class Freelancer extends User {
 
     @OneToMany(mappedBy = "freelancer", cascade = CascadeType.ALL)
     private List<Bid> bids;
-
+    @ManyToMany
+    @JoinTable(
+            name = "saved_projects",
+            joinColumns = @JoinColumn(name = "freelancer_id", referencedColumnName = "user_id", columnDefinition = "uuid"),
+            inverseJoinColumns = @JoinColumn(name = "project_id", referencedColumnName = "project_id")
+    )
+    private List<Project> savedProjects;
 
 
 }

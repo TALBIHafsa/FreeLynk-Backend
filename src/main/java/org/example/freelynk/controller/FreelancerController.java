@@ -1,15 +1,14 @@
 package org.example.freelynk.controller;
 
 import org.example.freelynk.model.Freelancer;
+import org.example.freelynk.model.Project;
 import org.example.freelynk.service.FreelancerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/freelancers")
@@ -55,6 +54,53 @@ public class FreelancerController {
     public ResponseEntity<List<Freelancer>> getFreelancersByCategory(@PathVariable String category) {
         List<Freelancer> freelancers = freelancerService.getFreelancersBySkills(Collections.singletonList(category));
         return new ResponseEntity<>(freelancers, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/{freelancerEmail}/saved-projects")
+    public ResponseEntity<List<Project>> getSavedProjects(@PathVariable String freelancerEmail) {
+        try {
+            Freelancer freelancer = freelancerService.getFreelancerByEmail(freelancerEmail);
+            List<Project> savedProjects = freelancerService.getSavedProject(freelancer);
+            return ResponseEntity.ok(savedProjects);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    // Toggle saved project (add/remove)
+    @PostMapping("/{freelancerEmail}/toggle-saved-project/{projectId}")
+    public ResponseEntity<Map<String, Object>> toggleSavedProject(
+            @PathVariable String freelancerEmail,
+            @PathVariable UUID projectId) {
+        try {
+            boolean isSaved = freelancerService.toggleSavedProject(freelancerEmail, projectId);
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("isSaved", isSaved);
+            response.put("message", isSaved ? "Project saved successfully" : "Project removed from saved");
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", false);
+            response.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
+
+    // Check if project is saved
+    @GetMapping("/{freelancerEmail}/is-project-saved/{projectId}")
+    public ResponseEntity<Map<String, Boolean>> isProjectSaved(
+            @PathVariable String freelancerEmail,
+            @PathVariable UUID projectId) {
+        try {
+            boolean isSaved = freelancerService.isProjectSaved(freelancerEmail, projectId);
+            Map<String, Boolean> response = new HashMap<>();
+            response.put("isSaved", isSaved);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
 
     public static class FreelancerPublicDTO {

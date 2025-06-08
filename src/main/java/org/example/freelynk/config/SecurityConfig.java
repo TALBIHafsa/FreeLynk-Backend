@@ -35,6 +35,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/freelancers/**").permitAll()
                             .requestMatchers("/api/projects/**").permitAll()
                             .requestMatchers("/api/bids/**").permitAll()
+                            .requestMatchers("/api/gigs/**").permitAll()
 
 
 //                .anyRequest().authenticated()
