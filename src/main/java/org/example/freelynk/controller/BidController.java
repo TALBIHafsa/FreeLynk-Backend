@@ -32,4 +32,9 @@ public class BidController {
     public ResponseEntity<List<Bid>> getBidsForProject(@PathVariable UUID projectId) {
         return ResponseEntity.ok(bidService.getBidsForProject(projectId));
     }
+    @GetMapping("/project/{projectId}/bidCount")
+    public ResponseEntity<Integer> getBidCount(@PathVariable UUID projectId) {
+    return ResponseEntity.ok(bidService.getBidsForProject(projectId).size());
+}
+
 }

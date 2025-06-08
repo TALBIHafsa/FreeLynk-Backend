@@ -20,7 +20,9 @@ List<Project> findByBudgetRange(@Param("min") Double min, @Param("max") Double m
     @Query("SELECT p FROM Project p JOIN p.requiredSkills s WHERE s IN :skills")
     List<Project> findByRequiredSkills(@Param("skills") List<String> skills);
 
-    List<Project> findByClient(Client client);
-    List<Project> findAll();
+@Query("SELECT p FROM Project p WHERE p.client.id = :userId")
+List<Project> findByClientId(@Param("userId") UUID userId);
+
+List<Project> findAll();
 
 }
