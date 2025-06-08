@@ -22,41 +22,62 @@ public class BidService {
         this.projectRepository = projectRepository;
     }
 
-    public Bid addBid(AddBidRequest request, Freelancer freelancer) {
-        Project project = projectRepository.findById(request.getProjectId())
-                .orElseThrow(() -> new RuntimeException("Project not found"));
+public Bid addBid(AddBidRequest request, Freelancer freelancer) {
+    Project project = projectRepository.findById(request.getProjectId())
+            .orElseThrow(() -> new RuntimeException("Project not found"));
 
-        Bid bid = new Bid();
-        bid.setFreelancer(freelancer);
-        bid.setProject(project);
-        bid.setBidAmount(request.getBidAmount());
-        bid.setDeliveryDays(request.getDeliveryDays());
-        bid.setStatus(BidStatus.PENDING);
-        bid.setMotivation(request.getMotivation());
+    // Create and save the bid
+    Bid bid = new Bid();
+    bid.setFreelancer(freelancer);
+    bid.setProject(project);
+    bid.setBidAmount(request.getBidAmount());
+    bid.setDeliveryDays(request.getDeliveryDays());
+    bid.setStatus(BidStatus.PENDING);
+    bid.setMotivation(request.getMotivation());
 
-        return bidRepository.save(bid);
+    Bid savedBid = bidRepository.save(bid);
+
+    // Update the project's bid count
+    Integer currentBidNumber = project.getBidNumber();
+    if (currentBidNumber == null) {
+        currentBidNumber = 0; // Handle null case
     }
+    project.setBidNumber(currentBidNumber + 1);
+    projectRepository.save(project);
+
+    return savedBid;
+}
 
     public List<Bid> getBidsForProject(UUID projectId) {
         return bidRepository.findByProjectId(projectId);
     }
 
-    @Transactional
-    public void updateBidStatus(UUID bidId, BidStatus newStatus) {
-        Bid bid = bidRepository.findById(bidId)
-                .orElseThrow(() -> new RuntimeException("Bid not found"));
+@Transactional
+public void updateBidStatus(UUID bidId, BidStatus newStatus) {
+    Bid bid = bidRepository.findById(bidId)
+            .orElseThrow(() -> new RuntimeException("Bid not found"));
 
-        if (newStatus == BidStatus.ACCEPTED && bid.getStatus() != BidStatus.ACCEPTED) {
-            bid.setStatus(BidStatus.ACCEPTED);
-            bidRepository.save(bid);
+    Project project = bid.getProject();
 
-            Project project = bid.getProject();
-            project.setBidNumber(project.getBidNumber() + 1);
-            projectRepository.save(project);
-        } else {
-            bid.setStatus(newStatus);
-            bidRepository.save(bid);
+    if (newStatus == BidStatus.ACCEPTED && bid.getStatus() != BidStatus.ACCEPTED) {
+        bid.setStatus(BidStatus.ACCEPTED);
+        bidRepository.save(bid);
+
+        project.setFreelancer(bid.getFreelancer()); 
+        projectRepository.save(project);
+
+        List<Bid> otherBids = bidRepository.findByProjectId(project.getId());
+        for (Bid other : otherBids) {
+            if (!other.getId().equals(bid.getId())) {
+                other.setStatus(BidStatus.REJECTED);
+                bidRepository.save(other);
+            }
         }
+    } else {
+        bid.setStatus(newStatus);
+        bidRepository.save(bid);
     }
+}
+
 
 }

@@ -51,6 +51,11 @@ public class Project {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime bindingDeadline;
 
+    @ManyToOne
+    @JoinColumn(name = "freelancer_id")
+    private Freelancer freelancer;
+
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
